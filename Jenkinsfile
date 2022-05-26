@@ -18,6 +18,12 @@ pipeline {
       sh 'mvn clean package'
     }
     }
- 
+   stage ('Deploy-To-Tomcat') {
+            steps {
+           sshagent(['tomcat']) {
+                sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@18.133.160.11:/prod/apache-tomcat-8.5.39/webapps/webapp.war'
+              }      
+           }       
+    }
   }
 }   
